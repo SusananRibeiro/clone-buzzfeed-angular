@@ -14,7 +14,7 @@ export class QuizzComponent implements OnInit {
   questions:any
   questionSelected:any
 
-  answers:string[] = []
+  answers:string[] = [] // para armazenar as respostas
   answerSelected:string =""
 
   questionIndex:number =0
@@ -41,14 +41,16 @@ export class QuizzComponent implements OnInit {
 
   }
 
+  // Vai armazenar as resposta
   playerChoose(value:string){
     this.answers.push(value)
     this.nextStep()
 
   }
 
+  // Vai fazer o próximo passo, ir para próxima questão ou exibir o resultado
   async nextStep(){
-    this.questionIndex+=1
+    this.questionIndex += 1
 
     if(this.questionMaxIndex > this.questionIndex){
         this.questionSelected = this.questions[this.questionIndex]
@@ -59,13 +61,11 @@ export class QuizzComponent implements OnInit {
     }
   }
 
+  // Vai checar o resultado, ver quais resposta mais aparecem, 'A" ou "B"
   async checkResult(anwsers:string[]){
 
-    const result = anwsers.reduce((previous, current, i, arr)=>{
-        if(
-          arr.filter(item => item === previous).length >
-          arr.filter(item => item === current).length
-        ){
+    const result = anwsers.reduce((previous, current, index, arr)=>{
+        if(arr.filter(item => item === previous).length > arr.filter(item => item === current).length) {
           return previous
         }else{
           return current
